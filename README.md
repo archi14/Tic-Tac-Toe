@@ -68,5 +68,4 @@ X |O |X
 |O |X
 |O |
 Player paluck has won the game
-Archi@Sanjeevs-MacBook-Air Tic-Tac-Toe %
 </code>
