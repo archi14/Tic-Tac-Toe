@@ -14,6 +14,7 @@ Functionalities implemented:
 
 python3 **init**.py
 
+<code>
 Please enter player 1 name
 archita
 Please enter player 2 name
@@ -68,3 +69,4 @@ X |O |X
 |O |
 Player paluck has won the game
 Archi@Sanjeevs-MacBook-Air Tic-Tac-Toe %
+</code>
