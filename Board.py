@@ -1,32 +1,16 @@
 class Board:
 
-    def __init__(self, number_of_rows, number_of_cols):
-        self.number_of_rows = number_of_rows
-        self.number_of_cols = number_of_cols
-        self.rows = {
-                        'X': [0 for i in range(self.number_of_rows)],
-                        'O': [0 for i in range(self.number_of_rows)]
-                    }
-        self.cols = {
-                        'X': [0 for i in range(self.number_of_cols)],
-                        'O': [0 for i in range(self.number_of_cols)]
-                    }
-        self.diagonals = {
-                        'X': [0 for i in range(self.number_of_cols)],
-                        'O': [0 for i in range(self.number_of_cols)]
-                    }
-        self.board = [["" for i in range(self.number_of_rows)] for j in range(self.number_of_cols)]
-
-    def reset(self):
-        self.rows = []
-        self.columns = []
-        self.diagonals = []
-        self.board = []
+    def __init__(self, size):
+        self.size = size
+        self.rows = {}
+        self.cols = {}
+        self.diagonals = {}
+        self.board = [["" for i in range(self.size)] for j in range(self.size)]
     
     def printBoard(self):
-        for i in range(self.number_of_rows):
-            for j in range(self.number_of_cols):
-                if j!=self.number_of_cols-1:
+        for i in range(self.size):
+            for j in range(self.size):
+                if j!=self.size-1:
                     print(self.board[i][j], end=' |')
                 else:
                     print(self.board[i][j], end='')
@@ -39,23 +23,38 @@ class Board:
         return True
 
     def isValid(self, row, col):
-        if row >=0 and row < self.number_of_rows and col >=0 and col < self.number_of_cols and self.isFilled(row, col)!=True:
+        if row >=0 and row < self.size and col >=0 and col < self.size and self.isFilled(row, col)==False:
             return True
-        print("This is not a valid move, Try again")
         return False
 
     def makeMove(self, row, col, sign):
-        self.rows[sign][row] +=1
-        self.cols[sign][col] +=1
-        if row == col:
-            self.diagonals[sign][0] += 1
-        if row + col == self.number_of_cols + self.number_of_rows:
-            self.diagonals[sign][1] += 1
-        self.board[row][col] = sign
 
-    def ifWon(self, sign, row, col):
+        if self.isValid(row, col) == False:
+            raise ValueError
+            return False
 
-        if self.rows[sign][row] == self.number_of_rows or self.cols[sign][col] == self.number_of_cols or self.diagonals[sign][0]== self.number_of_cols or self.number_of_cols == self.diagonals[sign][1]:
+        self.rows[row] = self.rows.get(row, {})
+        self.rows[row][sign] = self.rows[row].get(sign,0) + 1
+
+        if self.rows[row][sign] == self.size:
             return True
-        return False
-    
+
+        self.cols[col] = self.cols.get(col, {})
+        self.cols[col][sign] = self.cols[col].get(sign,0) + 1
+
+        if self.cols[col][sign] == self.size:
+            return True
+
+        if row == col:
+            self.diagonals["forward"] = self.diagonals.get("forward", {})
+            self.diagonals["forward"][sign] = self.diagonals["forward"].get(sign,0) + 1
+            if self.diagonals["forward"][sign] == self.size:
+                return True
+
+        if row + col == self.size - 1:
+            self.diagonals["backward"] = self.diagonals.get("backward", {})
+            self.diagonals["backward"][sign] = self.diagonals["backward"].get(sign,0) + 1
+            if self.diagonals["backward"][sign] == self.size:
+                return True
+
+        self.board[row][col] = sign
