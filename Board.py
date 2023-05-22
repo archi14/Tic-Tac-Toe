@@ -8,6 +8,7 @@ class Board:
         self.board = [["" for i in range(self.size)] for j in range(self.size)]
         self.marked_count = 0
     
+    # Function to print the current tic-tac-toe board
     def printBoard(self):
         for i in range(self.size):
             for j in range(self.size):
@@ -16,23 +17,27 @@ class Board:
                 else:
                     print(self.board[i][j], end='')
             print()
-        
+
+    # Checks if the board is completely filled or not
     def isBoardFilled(self):
         if self.marked_count == self.size*self.size:
             return True
         return False
 
+    # Checks if the given cell in the board is filled
     def isFilled(self, row, col):
 
         if self.board[row][col]=="":
             return False
         return True
 
+    # Check if the move made by the player is a valid move
     def isValid(self, row, col):
         if row >=0 and row < self.size and col >=0 and col < self.size and self.isFilled(row, col)==False:
             return True
         return False
 
+    # Function that enables making a move on the board
     def makeMove(self, row, col, sign):
 
         if self.isValid(row, col) == False:
@@ -63,6 +68,4 @@ class Board:
             self.diagonals["backward"] = self.diagonals.get("backward", {})
             self.diagonals["backward"][sign] = self.diagonals["backward"].get(sign,0) + 1
             if self.diagonals["backward"][sign] == self.size:
-                return True
-
-       
+                return True       

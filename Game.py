@@ -25,9 +25,3 @@ class Game:
                 cur_player = cur_player + 1
             except ValueError:
                 print('Not a valid Move, Try Again')
-               
-               
-    
-            
-
-
