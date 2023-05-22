@@ -6,6 +6,7 @@ class Board:
         self.cols = {}
         self.diagonals = {}
         self.board = [["" for i in range(self.size)] for j in range(self.size)]
+        self.marked_count = 0
     
     def printBoard(self):
         for i in range(self.size):
@@ -15,6 +16,11 @@ class Board:
                 else:
                     print(self.board[i][j], end='')
             print()
+        
+    def isBoardFilled(self):
+        if self.marked_count == self.size*self.size:
+            return True
+        return False
 
     def isFilled(self, row, col):
 
@@ -31,7 +37,9 @@ class Board:
 
         if self.isValid(row, col) == False:
             raise ValueError
-            return False
+        else:
+             self.board[row][col] = sign
+             self.marked_count = self.marked_count + 1
 
         self.rows[row] = self.rows.get(row, {})
         self.rows[row][sign] = self.rows[row].get(sign,0) + 1
@@ -57,4 +65,4 @@ class Board:
             if self.diagonals["backward"][sign] == self.size:
                 return True
 
-        self.board[row][col] = sign
+       
